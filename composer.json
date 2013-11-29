@@ -1,0 +1,24 @@
+{
+    "name": "enlitepro/enlite-sitemap",
+    "description": "The ZF2 module for generation static site map",
+    "minimum-stability": "stable",
+    "keywords": [
+        "framework",
+        "zendframework2",
+        "zf2",
+        "sitemap"
+    ],
+    "authors": [
+        {
+            "name": "Vladimir Struts",
+            "email": "Sysaninster@gmail.com"
+        }
+    ],
+    "require": {
+        "php":                                  ">=5.4",
+        "zendframework/zendframework":          "2.2.*"
+    },
+    "require-dev": {
+        "enlitepro/zf2-scaffold":               "dev-master"
+    }
+}
