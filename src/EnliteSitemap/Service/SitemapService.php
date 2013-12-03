@@ -18,8 +18,8 @@ class SitemapService implements ServiceLocatorAwareInterface
 
     use ServiceLocatorAwareTrait, CommonOptionsTrait;
 
-    const DEFAULT_CONTAINER = 'sitemap';
-    const DEFAULT_INDEX_CONTAINER = 'sitemapIndex';
+    const DEFAULT_CONTAINER = 'EnliteSitemapNavigation';
+    const DEFAULT_INDEX_CONTAINER = 'EnliteSitemapIndexNavigation';
 
     /**
      * @param string $container
@@ -53,32 +53,39 @@ class SitemapService implements ServiceLocatorAwareInterface
         return $siteMapIndexHelper;
     }
 
+    /**
+     * Render static a site map
+     *
+     * @param string $container
+     * @param string $containerIndex
+     */
     public function renderStaticSiteMap($container = self::DEFAULT_CONTAINER, $containerIndex = self::DEFAULT_INDEX_CONTAINER)
     {
         $helper = $this->getSiteMapHelper($container);
         $objectContainer = $helper->getContainer();
+        $files = [];
         if (!$objectContainer instanceof Container || $objectContainer->countFiles() < 2) {
             if ($objectContainer instanceof Container) {
                 $objectContainer->initCurrentFile();
             }
-            $this->renderSiteMap($helper, $this->getIndexFileName());
+            $files[] = $this->renderSiteMap($helper, $this->getIndexFileName());
         } else {
             $names = [];
             for ($num=0, $count=$objectContainer->countFiles(); $num<$count; $num++) {
                 $objectContainer->setCurrentFile($num);
                 $name = sprintf($this->getNonIndexFileName(), $num+1);
                 $names[] = $name;
-                $this->renderSiteMap(
+                $files[] = $this->renderSiteMap(
                     $helper, $name
                 );
             }
 
             $helperSitemapIndex = $this->getSiteMapIndexHelper($containerIndex);
             $this->prepareContainerIndex($helperSitemapIndex->getContainer(), $names);
-            $this->renderSiteMap($helperSitemapIndex, $this->getIndexFileName());
-            // TODO: config, helper, controller
+            $files[] = $this->renderSiteMap($helperSitemapIndex, $this->getIndexFileName());
         }
 
+        return $files;
     }
 
     /**
@@ -95,6 +102,7 @@ class SitemapService implements ServiceLocatorAwareInterface
         }
         $container->setNamesSitemaps($names);
         $container->setPublicPath($this->getPath());
+        $container->generationPages();
     }
 
     /**
@@ -128,11 +136,15 @@ class SitemapService implements ServiceLocatorAwareInterface
      *
      * @param Navigation\Sitemap $helper
      * @param string $nameFile
+     * @return string
      */
     public function renderSiteMap(Navigation\Sitemap $helper, $nameFile)
     {
         $data = $helper->render();
-        file_put_contents($this->getPath() . $nameFile, $data);
+        $path = $this->getPath() . '/' . $nameFile;
+        file_put_contents($path, $data);
+
+        return $path;
     }
 
 

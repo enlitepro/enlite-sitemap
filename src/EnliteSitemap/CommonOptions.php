@@ -2,6 +2,8 @@
 
 namespace EnliteSitemap;
 
+use EnliteSitemap\Navigation\DynamicPages;
+use EnliteSitemap\Navigation\DynamicPagesInterface;
 use Zend\Stdlib\AbstractOptions;
 
 class CommonOptions extends AbstractOptions
@@ -34,6 +36,14 @@ class CommonOptions extends AbstractOptions
      * @var string The name send to sprintf with a number of file
      */
     protected $nonIndexFile = 'sitemap%d.xml';
+
+    /**
+     * The dynamicPages
+     * Contains services for get dynamic pages (from a service locator)
+     *
+     * @var DynamicPagesInterface[]
+     */
+    protected $dynamicPages = [];
 
     /**
      * @param int $limitUrlInFile
@@ -99,4 +109,19 @@ class CommonOptions extends AbstractOptions
         return $this->nonIndexFile;
     }
 
+    /**
+     * @param \EnliteSitemap\Navigation\DynamicPages[] $dynamicPages
+     */
+    public function setDynamicPages($dynamicPages)
+    {
+        $this->dynamicPages = $dynamicPages;
+    }
+
+    /**
+     * @return \EnliteSitemap\Navigation\DynamicPages[]
+     */
+    public function getDynamicPages()
+    {
+        return $this->dynamicPages;
+    }
 }

@@ -1,14 +1,18 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Администратор
- * Date: 02.12.13
- * Time: 19:16
+ * The index container
+ *
+ * @category   Navigation
+ * @package    EnliteSitemap
+ * @author     Vladimir Struc <Sysaninster@gmail.com>
+ * @license    LICENSE.txt
+ * @date       02.12.13
  */
 
 namespace EnliteSitemap\Navigation;
 
 
+use DateTime;
 use Zend\Navigation\AbstractContainer;
 use Zend\Navigation\Page\Uri;
 
@@ -75,6 +79,7 @@ class ContainerIndex extends AbstractContainer implements ContainerIndexInterfac
     public function generationPages()
     {
         $names = $this->getNamesSitemaps();
+        $changed = new DateTime();
         if (!count($names)) {
             return;
         }
@@ -82,6 +87,7 @@ class ContainerIndex extends AbstractContainer implements ContainerIndexInterfac
             $page = $this->factoryPage();
             $page->setTitle($name);
             $page->setUri($this->getPublicPath() . '/' . $name);
+            $page->set('lastmod', $changed->format(DateTime::W3C));
             $this->addPage($page);
         }
     }
