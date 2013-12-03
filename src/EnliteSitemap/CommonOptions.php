@@ -14,7 +14,7 @@ class CommonOptions extends AbstractOptions
      *
      * @var int If 0 then unlimited
      */
-    protected $limitUrlInFile = 0;
+    protected $limitUrlInFile = 50000;
 
     /**
      * The publicPath

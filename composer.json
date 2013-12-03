@@ -20,5 +20,10 @@
     },
     "require-dev": {
         "enlitepro/zf2-scaffold":               "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "EnliteSitemap": "src"
+        }
     }
 }
