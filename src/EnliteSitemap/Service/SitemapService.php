@@ -61,6 +61,7 @@ class SitemapService implements ServiceLocatorAwareInterface
         if (!$siteMapIndexHelper = $navigation->findHelper('sitemapIndex', false)) {
             $siteMapIndexHelper = new SitemapIndex();
             $siteMapIndexHelper->setContainer($navigation->getContainer());
+            $siteMapIndexHelper->setView($this->getSiteMapHelper()->getView());
         }
         return $siteMapIndexHelper;
     }

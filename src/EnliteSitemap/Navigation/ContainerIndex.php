@@ -86,7 +86,7 @@ class ContainerIndex extends AbstractContainer implements ContainerIndexInterfac
         foreach ($names as $name) {
             $page = $this->factoryPage();
             $page->setTitle($name);
-            $page->setUri($this->getPublicPath() . '/' . $name);
+            $page->setUri('/' . $this->getPublicPath() . '/' . $name);
             $page->set('lastmod', $changed->format(DateTime::W3C));
             $this->addPage($page);
         }

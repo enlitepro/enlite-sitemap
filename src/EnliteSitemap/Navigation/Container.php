@@ -148,7 +148,6 @@ class Container extends Navigation
      */
     public function addPagesToFile(array $pages)
     {
-
         if (count($pages)) {
             foreach ($pages as $page) {
                 $this->addPageToFile($page);
@@ -166,7 +165,7 @@ class Container extends Navigation
      */
     public function addPageToFile($page)
     {
-        if ($this->getCurrentFile() == 0 || $this->countPagesAtCurrentFile() < $this->getPagesPerFile()) {
+        if ($this->countPagesAtCurrentFile() < $this->getPagesPerFile()) {
             $this->addPageAtCurrentFile($page);
         } else {
             $this->setCurrentFile(
