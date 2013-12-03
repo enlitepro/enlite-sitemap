@@ -22,6 +22,14 @@ class SitemapService implements ServiceLocatorAwareInterface
     const DEFAULT_INDEX_CONTAINER = 'EnliteSitemapIndexNavigation';
 
     /**
+     * @param ServiceLocatorInterface $serviceLocator
+     */
+    public function __construct(ServiceLocatorInterface $serviceLocator)
+    {
+        $this->serviceLocator = $serviceLocator;
+    }
+
+    /**
      * @param string $container
      * @return Navigation\Sitemap
      */
