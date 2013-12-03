@@ -1,11 +1,11 @@
 <?php
 
-namespace EnliteSitemap;
+namespace EnliteSitemap\Option;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class CommonOptionsFactory implements FactoryInterface
+class URLOptionsFactory implements FactoryInterface
 {
 
     /**
@@ -14,9 +14,9 @@ class CommonOptionsFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $config = $serviceLocator->get('Config');
-        return new CommonOptions(
-            isset($config['EnliteSitemapCommon'])
-                ? $config['EnliteSitemapCommon']
+        return new URLOptions(
+            isset($config['EnliteSitemap']) && isset($config['EnliteSitemap']['url'])
+                ? $config['EnliteSitemap']['url']
                 : []
         );
     }

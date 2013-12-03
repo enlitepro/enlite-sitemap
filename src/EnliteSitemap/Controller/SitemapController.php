@@ -17,8 +17,9 @@ class SitemapController extends AbstractActionController
     {
         $model = new ConsoleModel();
         $files = $this->getSitemapService()->renderStaticSiteMap();
-        $text = 'Generated success.' . PHP_EOL
-            . 'New/update files:' . PHP_EOL . implode(PHP_EOL, $files);
+        $text = 'Generated the site map success.' . PHP_EOL
+            . 'New/update files:' . PHP_EOL
+            . implode(PHP_EOL, $files) . PHP_EOL;
         $model->setResult($text);
 
         return $model;

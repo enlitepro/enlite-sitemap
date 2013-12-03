@@ -2,21 +2,25 @@
 
 namespace EnliteSitemap\Service;
 
-use EnliteSitemap\CommonOptionsTrait;
+use EnliteSitemap\Option\CommonOptionsTrait;
 use EnliteSitemap\Exception\RuntimeException;
 use EnliteSitemap\Navigation\Container;
 use EnliteSitemap\Navigation\ContainerIndexInterface;
+use EnliteSitemap\Option\URLOptionsTrait;
 use EnliteSitemap\View\Helper\Navigation\SitemapIndex;
 use Zend\Navigation\AbstractContainer;
+use Zend\Navigation\Page\Mvc;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Helper\Navigation;
+use Zend\View\Helper\ServerUrl;
+use Zend\View\HelperPluginManager;
 
 class SitemapService implements ServiceLocatorAwareInterface
 {
 
-    use ServiceLocatorAwareTrait, CommonOptionsTrait;
+    use ServiceLocatorAwareTrait, CommonOptionsTrait, URLOptionsTrait;
 
     const DEFAULT_CONTAINER = 'EnliteSitemapNavigation';
     const DEFAULT_INDEX_CONTAINER = 'EnliteSitemapIndexNavigation';
@@ -36,7 +40,7 @@ class SitemapService implements ServiceLocatorAwareInterface
     public function getSiteMapHelper($container = self::DEFAULT_CONTAINER)
     {
         /** @var Navigation $navigation */
-        $navigation = $this->getServiceLocator()->get('ViewManager')->get('Navigation');
+        $navigation = $this->getServiceLocator()->get('ViewHelperManager')->get('Navigation');
         $navigation->setContainer($container);
 
         /** @var Navigation\Sitemap $siteMapHelper */
@@ -51,7 +55,7 @@ class SitemapService implements ServiceLocatorAwareInterface
     public function getSiteMapIndexHelper($container = self::DEFAULT_INDEX_CONTAINER)
     {
         /** @var Navigation $navigation */
-        $navigation = $this->getServiceLocator()->get('ViewManager')->get('Navigation');
+        $navigation = $this->getServiceLocator()->get('ViewHelperManager')->get('Navigation');
         $navigation->setContainer($container);
 
         if (!$siteMapIndexHelper = $navigation->findHelper('sitemapIndex', false)) {
@@ -62,13 +66,32 @@ class SitemapService implements ServiceLocatorAwareInterface
     }
 
     /**
+     * Set a valid host, port, scheme to the server url helper
+     */
+    public function initServerUrlHelper()
+    {
+        /** @var HelperPluginManager $manager */
+        $manager = $this->getServiceLocator()->get('ViewHelperManager');
+        /** @var ServerUrl $helper */
+        $helper = $manager->get('serverUrl');
+        $options = $this->getURLOptions();
+
+        // configure
+        $helper->setPort($options->getPort());
+        $helper->setScheme($options->getScheme());
+        $helper->setHost($options->getHost());
+    }
+
+    /**
      * Render static a site map
      *
      * @param string $container
      * @param string $containerIndex
+     * @return array
      */
     public function renderStaticSiteMap($container = self::DEFAULT_CONTAINER, $containerIndex = self::DEFAULT_INDEX_CONTAINER)
     {
+        $this->initServerUrlHelper();
         $helper = $this->getSiteMapHelper($container);
         $objectContainer = $helper->getContainer();
         $files = [];
@@ -155,5 +178,21 @@ class SitemapService implements ServiceLocatorAwareInterface
         return $path;
     }
 
+    /**
+     * Factory a site map page
+     *
+     * @return Mvc
+     */
+    public function factoryMVCPage()
+    {
+        $application = $this->getServiceLocator()->get('Application');
+        $routeMatch  = $application->getMvcEvent()->getRouteMatch();
+        $router      = $this->getServiceLocator()->get('HttpRouter');
+
+        $page = new Mvc();
+        $page->setRouteMatch($routeMatch);
+        $page->setRouter($router);
+        return $page;
+    }
 
 }

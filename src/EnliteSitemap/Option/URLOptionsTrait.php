@@ -1,48 +1,48 @@
 <?php
 
-namespace EnliteSitemap;
+namespace EnliteSitemap\Option;
 
-use EnliteSitemap\CommonOptions;
+use EnliteSitemap\Option\URLOptions;
 use EnliteSitemap\Exception\RuntimeException;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-trait CommonOptionsTrait
+trait URLOptionsTrait
 {
 
     /**
-     * @var CommonOptions
+     * @var URLOptions
      */
-    protected $commonOptions = null;
+    protected $uRLOptions = null;
 
     /**
-     * @param CommonOptions $commonOptions
+     * @param URLOptions $uRLOptions
      */
-    public function setCommonOptions(CommonOptions $commonOptions)
+    public function setURLOptions(URLOptions $uRLOptions)
     {
-        $this->commonOptions = $commonOptions;
+        $this->uRLOptions = $uRLOptions;
     }
 
     /**
-     * @return CommonOptions
+     * @return URLOptions
      * @throws RuntimeException
      */
-    public function getCommonOptions()
+    public function getURLOptions()
     {
-        if (null === $this->commonOptions) {
+        if (null === $this->uRLOptions) {
             if ($this instanceof ServiceLocatorAwareInterface || method_exists($this, 'getServiceLocator')) {
-                $this->commonOptions = $this->getServiceLocator()->get('EnliteSitemapCommonOptions');
+                $this->uRLOptions = $this->getServiceLocator()->get('EnliteSitemapURLOptions');
             } else {
                 if (property_exists($this, 'serviceLocator')
                     && $this->serviceLocator instanceof ServiceLocatorInterface
                 ) {
-                    $this->commonOptions = $this->serviceLocator->get('EnliteSitemapCommonOptions');
+                    $this->uRLOptions = $this->serviceLocator->get('EnliteSitemapURLOptions');
                 } else {
                     throw new RuntimeException('Service locator not found');
                 }
             }
         }
-        return $this->commonOptions;
+        return $this->uRLOptions;
     }
 
 

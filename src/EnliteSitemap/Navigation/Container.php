@@ -100,10 +100,10 @@ class Container extends Navigation
      */
     public function addPageAtCurrentFile($page)
     {
-        if (!isset($this->pagesPerFile[$this->getCurrentFile()])) {
-            $this->pagesPerFile[$this->getCurrentFile()] = [];
+        if (!isset($this->files[$this->getCurrentFile()])) {
+            $this->files[$this->getCurrentFile()] = [];
         }
-        $this->pagesPerFile[$this->getCurrentFile()][] = $page;
+        $this->files[$this->getCurrentFile()][] = $page;
     }
 
     /**
@@ -112,11 +112,11 @@ class Container extends Navigation
     public function initCurrentFile()
     {
         $this->removePages();
-        if (!isset($this->pagesPerFile[$this->getCurrentFile()])) {
+        if (!isset($this->files[$this->getCurrentFile()])) {
             return;
         }
 
-        $this->addPages($this->pagesPerFile[$this->getCurrentFile()]);
+        $this->addPages($this->files[$this->getCurrentFile()]);
     }
 
     /**
@@ -126,10 +126,10 @@ class Container extends Navigation
      */
     public function countPagesAtCurrentFile()
     {
-        if (!isset($this->pagesPerFile[$this->getCurrentFile()])) {
+        if (!isset($this->files[$this->getCurrentFile()])) {
             return 0;
         }
-        return count($this->pagesPerFile[$this->getCurrentFile()]);
+        return count($this->files[$this->getCurrentFile()]);
     }
 
     /**
@@ -146,12 +146,12 @@ class Container extends Navigation
      * @param array $pages
      * @return $this
      */
-    public function addPagesToFile($pages)
+    public function addPagesToFile(array $pages)
     {
 
         if (count($pages)) {
             foreach ($pages as $page) {
-                $this->addPagesToFile($page);
+                $this->addPageToFile($page);
             }
         }
 

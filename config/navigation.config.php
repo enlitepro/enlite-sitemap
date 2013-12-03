@@ -3,6 +3,7 @@
 
 return array(
     'navigation' => array(
-        'default' => array()
+        'default' => array(),
+        'sitemap' => array(),
     )
 );

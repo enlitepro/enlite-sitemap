@@ -4,9 +4,10 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'EnliteSitemapSitemapService' => 'EnliteSitemap\Service\SitemapServiceFactory',
-            'EnliteSitemapCommonOptions' => 'EnliteSitemap\CommonOptionsFactory',
+            'EnliteSitemapCommonOptions' => 'EnliteSitemap\Option\CommonOptionsFactory',
             'EnliteSitemapNavigation' => 'EnliteSitemap\Navigation\ContainerFactory',
             'EnliteSitemapIndexNavigation' => 'EnliteSitemap\Navigation\ContainerIndexFactory',
+            'EnliteSitemapURLOptions' => 'EnliteSitemap\Option\URLOptionsFactory'
         ),
         'invokables' => array(
             

@@ -1,6 +1,6 @@
 <?php
 
-namespace EnliteSitemap;
+namespace EnliteSitemap\Option;
 
 use EnliteSitemap\Navigation\DynamicPages;
 use EnliteSitemap\Navigation\DynamicPagesInterface;
