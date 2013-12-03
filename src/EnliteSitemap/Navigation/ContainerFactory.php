@@ -36,6 +36,20 @@ class ContainerFactory extends AbstractNavigationFactory
         return $container;
     }
 
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     * @param array|\Zend\Config\Config $pages
+     * @throws \Zend\Navigation\Exception\InvalidArgumentException
+     */
+    protected function preparePages(ServiceLocatorInterface $serviceLocator, $pages)
+    {
+        $application = $serviceLocator->get('Application');
+        $routeMatch  = $application->getMvcEvent()->getRouteMatch();
+        $router      = $serviceLocator->get('HttpRouter');
+
+        return $this->injectComponents($pages, $routeMatch, $router);
+    }
+
     protected function insertDynamicPages(Container $container, ServiceLocatorInterface $serviceLocator)
     {
         /** @var CommonOptions $commonOptions */
