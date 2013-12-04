@@ -9,7 +9,7 @@ The recommended way to install is through composer.
 ```json
 {
     "require": {
-        "enlitepro/enlite-sitemap": "1.1.*"
+        "enlitepro/enlite-sitemap": "1.0.*"
     }
 }
 ```
@@ -48,8 +48,10 @@ For example config:
 [
     'EnliteSitemap' => [
             'common' => [
-                'index_file' => 'sitemap.xml', // The name site map or site map index (if some files)
-                'non_index_file' => 'sitemap%d.xml', // The name of site map. Use when a site map is some files
+                // The name site map or site map index (if some files)
+                'index_file' => 'sitemap.xml',
+                // The name of site map. Use when a site map is some files
+                'non_index_file' => 'sitemap%d.xml',
                 'public_path' => 'public',
                 'limit_url_in_file' => 50000,
                 'dynamic_pages' => [],
