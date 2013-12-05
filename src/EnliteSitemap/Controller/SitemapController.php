@@ -13,7 +13,7 @@ class SitemapController extends AbstractActionController
 
     use SitemapServiceTrait;
 
-    public function generationAction()
+    public function generateAction()
     {
         $model = new ConsoleModel();
         $files = $this->getSitemapService()->renderStaticSiteMap();

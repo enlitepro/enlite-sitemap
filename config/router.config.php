@@ -8,12 +8,12 @@ return array(
     'console' => array(
         'router' => array(
             'routes' => array(
-                'enliteSitemap generation' => array(
+                'enliteSitemap generate' => array(
                     'options' => array(
-                        'route' => 'enliteSitemap generation',
+                        'route' => 'enliteSitemap generate',
                         'defaults' => array(
                             'controller' => 'EnliteSitemapSitemap',
-                            'action' => 'generation'
+                            'action' => 'generate'
                         )
                     )
                 ),

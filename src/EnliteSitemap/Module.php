@@ -66,7 +66,7 @@ class Module implements
     public function getConsoleUsage(AdapterInterface $console)
     {
         return [
-            'enliteSitemap generation' => 'Generation a static site map'
+            'enliteSitemap generate' => 'Generate a static site map'
         ];
     }
 }
