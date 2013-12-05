@@ -65,3 +65,9 @@ For example config:
         ],
 ]
 ```
+
+Notice
+======
+
+For create Zend\Navigation\Page\Mvc, we recommend use
+EnliteSitemap\Service\SitemapService::factoryMVCPage()
