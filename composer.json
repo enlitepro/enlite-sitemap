@@ -16,7 +16,7 @@
     ],
     "require": {
         "php":                                  ">=5.4",
-        "zendframework/zendframework":          "2.2.*"
+        "zendframework/zendframework":          "2.3.*"
     },
     "require-dev": {
         "enlitepro/zf2-scaffold":               "dev-master"
